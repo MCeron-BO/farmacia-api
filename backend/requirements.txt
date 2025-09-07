@@ -22,3 +22,5 @@ httpx>=0.27.2
 geopy>=2.4.1
 orjson>=3.10.7
 python-multipart>=0.0.9
+
+#librerias necesarias
