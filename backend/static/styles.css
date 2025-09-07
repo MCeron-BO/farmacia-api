@@ -1,0 +1,149 @@
+:root{
+  --bg:#0b1220;
+  --panel:#0f1828;
+  --panel-2:#0c1423;
+  --text:#E5E7EB;
+  --muted:#9AA5B1;
+  --primary:#3B82F6;
+  --primary-600:#2563EB;
+  --border:#1f2a3a;
+  --success:#22c55e;
+}
+
+*{ box-sizing:border-box; }
+html,body{ height:100%; }
+body{
+  margin:0; background:var(--bg); color:var(--text);
+  font-family: Inter, system-ui, -apple-system, Segoe UI, Roboto, Ubuntu, Cantarell, "Helvetica Neue", Arial;
+}
+
+/* Topbar */
+.topbar{
+  height:58px; display:flex; align-items:center; justify-content:space-between;
+  padding:0 16px; background:var(--panel); border-bottom:1px solid var(--border);
+}
+.brand{ font-weight:700; display:flex; align-items:center; gap:8px; }
+.actions{ display:flex; gap:8px; }
+.btn{
+  background:transparent; border:1px solid var(--border); color:var(--text);
+  padding:8px 12px; border-radius:10px; cursor:pointer;
+}
+.btn:hover{ border-color:var(--primary); }
+.btn-primary{ background:var(--primary); border-color:var(--primary); color:white; }
+.btn-primary:hover{ background:var(--primary-600); border-color:var(--primary-600); }
+.btn-ghost{ background:transparent; border-color:transparent; }
+.btn-ghost:hover{ background:rgba(255,255,255,0.06); }
+.btn.full{ width:100%; }
+
+/* Layout (sidebar más angosta) */
+.page{
+  display:grid; grid-template-columns: 260px 1fr auto; gap:16px;
+  padding:16px;
+}
+.sidebar{ display:flex; flex-direction:column; gap:16px; }
+.card{
+  background:var(--panel); border:1px solid var(--border);
+  border-radius:14px; padding:16px;
+}
+.card h3{ margin:0 0 8px 0; }
+.muted{ color:var(--muted); font-size:.92rem; }
+.status{ list-style:none; padding:0; margin:8px 0 0; display:flex; flex-direction:column; gap:8px; }
+.dot{ width:10px; height:10px; border-radius:50%; display:inline-block; margin-right:8px; }
+.dot.ok{ background:var(--success); }
+
+/* Chat */
+.chat-area{
+  display:flex; flex-direction:column; gap:12px;
+  min-height:calc(100vh - 58px - 32px);
+}
+.chat-title{ padding:6px 8px; }
+.messages{
+  flex:1; overflow:auto; background:var(--panel);
+  border:1px solid var(--border); border-radius:14px; padding:12px;
+}
+.msg{
+  background:var(--panel-2); border:1px solid var(--border);
+  border-radius:12px; padding:10px 12px; margin:8px 0; max-width:80%;
+}
+.msg.me{
+  margin-left:auto; background:transparent; border-color:var(--primary);
+}
+.composer{
+  display:flex; gap:8px; align-items:center;
+}
+.composer input{
+  flex:1; background:var(--panel); color:var(--text);
+  border:1px solid var(--border); border-radius:12px; padding:10px 12px;
+}
+.suggestions{ display:flex; flex-wrap:wrap; gap:8px; }
+.chip{
+  background:transparent; border:1px dashed var(--border); color:var(--muted);
+  padding:6px 10px; border-radius:999px; cursor:pointer; font-size:.9rem;
+}
+.chip:hover{ border-color:var(--primary); color:var(--text); }
+
+/* Panel de mapa (oculto por defecto) */
+.mapwrap{
+  width:36vw; min-width:360px; height:76vh;
+  background:var(--panel); border:1px solid var(--border); border-radius:14px;
+  overflow:hidden; position:sticky; top:16px; display:none;
+}
+#map{ width:100%; height:100%; }
+
+/* pulse para resaltar el mapa al abrir */
+@keyframes pulseBorder {
+  0% { box-shadow: 0 0 0 0 rgba(59,130,246,.6); }
+  100% { box-shadow: 0 0 0 12px rgba(59,130,246,0); }
+}
+.mapwrap.pulse { animation: pulseBorder 1s ease-out 2; }
+
+/* CTA bajo mensaje del bot */
+.cta-row{ display:flex; flex-wrap:wrap; gap:8px; margin-top:8px; }
+.cta-btn{ background:transparent; border:1px solid var(--primary); color:var(--text);
+  padding:6px 10px; border-radius:10px; cursor:pointer; }
+.cta-btn:hover{ background:rgba(59,130,246,.15); }
+
+/* Responsive */
+@media (max-width: 1100px){
+  .page{ grid-template-columns: 1fr; }
+  .mapwrap{ position:relative; width:100%; height:52vh; min-width:auto; }
+}
+
+/* ===== Indicador "pensando" con pastillas ===== */
+.msg.typing { 
+  display:flex; align-items:center; gap:10px; 
+  color:#a6b3c2; font-style: italic; 
+}
+.typing-wrap{ display:flex; align-items:center; gap:10px; }
+.pills { display:flex; align-items:center; gap:8px; }
+
+/* Pastilla tipo cápsula: mitad color / mitad blanco */
+.pill {
+  width: 20px; height: 10px;
+  border-radius: 10px;
+  background: linear-gradient(90deg, #ff4d4d 0 50%, #ffffff 50% 100%);
+  border: 1px solid rgba(255,255,255,0.2);
+  box-shadow: 0 1px 1px rgba(0,0,0,0.25);
+
+  /* Dos animaciones: rebote + ciclo de color */
+  animation: pill-bounce 900ms infinite ease-in-out,
+             pill-hue 2400ms infinite linear;
+  animation-delay: var(--d, 0ms), var(--hd, 0ms);
+
+  transform-origin: center bottom;
+  opacity: .85;
+}
+
+/* Rebote */
+@keyframes pill-bounce {
+  0%, 80%, 100% { transform: translateY(0) scale(1); opacity: .6; }
+  40% { transform: translateY(-6px) scale(1.04); opacity: 1; }
+}
+
+/* Cambio de color suave mediante hue-rotate */
+@keyframes pill-hue {
+  0%   { filter: hue-rotate(0deg); }
+  33%  { filter: hue-rotate(120deg); }
+  66%  { filter: hue-rotate(240deg); }
+  100% { filter: hue-rotate(360deg); }
+}

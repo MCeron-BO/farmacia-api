@@ -1,0 +1,83 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8" />
+  <title>Asistente Farmacéutico IA</title>
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <link rel="stylesheet" href="/styles.css?v=ui7" />
+
+  <!-- Leaflet -->
+  <link
+    rel="stylesheet"
+    href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
+    integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY="
+    crossorigin=""
+  />
+  <script
+    src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"
+    integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo="
+    crossorigin=""
+  ></script>
+</head>
+<body>
+  <!-- Topbar -->
+  <header class="topbar">
+    <div class="brand">
+      <span class="pill">💊</span> Asistente Farmacéutico IA
+    </div>
+    <nav class="actions">
+      <button id="resetCtx" class="btn btn-ghost">🗑️ Limpiar Chat</button>
+      <button id="toggleMap" class="btn btn-ghost" aria-pressed="false">🗺️ Mostrar mapa</button>
+    </nav>
+  </header>
+
+  <main class="page">
+    <!-- Sidebar izquierda -->
+    <aside class="sidebar">
+      <div class="card">
+        <h3>Configurar Ubicación</h3>
+        <p class="muted">Usa tu GPS para mejorar la búsqueda de farmacias cercanas.</p>
+        <button id="loc2" class="btn btn-primary full">📍 Usar Mi Ubicación</button>
+      </div>
+
+      <div class="card">
+        <h3>Estado del Sistema</h3>
+        <ul class="status">
+          <li><span class="dot ok"></span> API: healthy</li>
+          <li><span class="dot ok"></span> Base de Datos: connected</li>
+          <li><span class="dot ok"></span> API MINSAL: connected</li>
+        </ul>
+      </div>
+    </aside>
+
+    <!-- Conversación -->
+    <section class="chat-area">
+      <header class="chat-title">
+        <h2>Conversación</h2>
+        <p class="muted">Pregunte sobre farmacias, medicamentos o centros médicos</p>
+      </header>
+
+      <div id="messages" class="messages"></div>
+
+      <div class="composer">
+        <input id="msg" type="text" placeholder="Escriba su pregunta aquí..." />
+        <button id="send" class="btn btn-primary">Enviar</button>
+      </div>
+
+      <div class="suggestions">
+        <button class="chip" data-prompt="farmacias de turno">🔎 Farmacias de turno</button>
+        <button class="chip" data-prompt="farmacias cercanas">🔎 Farmacias cercanas</button>
+        <button class="chip" data-prompt="¿para qué sirve la aspirina?">Información de medicamento</button>
+        <button class="chip" data-prompt="¿dónde puedo conseguir una receta o telemedicina?">Centros médicos</button>
+      </div>
+    </section>
+
+    <!-- Panel de mapa (oculto por defecto) -->
+    <aside class="mapwrap" style="display:none;">
+      <div id="map"></div>
+    </aside>
+  </main>
+
+  <script src="/script.js?v=ui7"></script>
+</body>
+</html>
